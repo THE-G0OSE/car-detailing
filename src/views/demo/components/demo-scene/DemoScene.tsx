@@ -1,8 +1,8 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef } from "react";
-import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
-import { Color, Mesh, MeshStandardMaterial, PMREMGenerator } from "three";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Canvas, ThreeEvent, useFrame, useLoader, useThree } from "@react-three/fiber";
+import { Color, MathUtils, Mesh, MeshStandardMaterial, Object3D, PMREMGenerator } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
@@ -31,6 +31,28 @@ interface IGlassDefaults {
     color: Color;
     opacity: number;
 }
+
+interface IDoorConfig {
+    name: string;
+    // Both hinges sit at the door's front edge; the sign points each side's trailing edge outward.
+    openSign: 1 | -1;
+}
+
+const DOOR_MAX_ANGLE = MathUtils.degToRad(62);
+const DOORS: IDoorConfig[] = [
+    { name: "Door_FrontL", openSign: -1 },
+    { name: "Door_FrontR", openSign: 1 },
+    { name: "Door_RearL", openSign: -1 },
+    { name: "Door_RearR", openSign: 1 },
+];
+const DOOR_NAMES = new Set(DOORS.map((door) => door.name));
+
+const findDoorName = (object: Object3D | null): string | null => {
+    for (let node: Object3D | null = object; node; node = node.parent) {
+        if (DOOR_NAMES.has(node.name)) return node.name;
+    }
+    return null;
+};
 
 const CameraControls = () => {
     const camera = useThree((state) => state.camera);
@@ -83,8 +105,10 @@ const StudioEnvironment = () => {
 
 const CarModel: React.FC<IProps> = ({ color, suspension, tinted }) => {
     const gltf = useLoader(GLTFLoader, CAR_MODEL_URL);
+    const domElement = useThree((state) => state.gl.domElement);
     const paintTarget = useRef(new Color(color));
     const initialized = useRef(false);
+    const [openDoors, setOpenDoors] = useState<ReadonlySet<string>>(() => new Set());
 
     const parts = useMemo(() => {
         const materials: Record<string, MeshStandardMaterial> = {};
@@ -93,7 +117,9 @@ const CarModel: React.FC<IProps> = ({ color, suspension, tinted }) => {
                 object.castShadow = true;
                 object.receiveShadow = true;
                 const material = object.material as MeshStandardMaterial;
-                materials[material.name] = material;
+                // Blender re-exports append a ".001"-style suffix to de-duplicate names; ignore it.
+                const baseName = material.name.replace(/\.\d+$/, "");
+                materials[baseName] = material;
             }
         });
 
@@ -106,12 +132,37 @@ const CarModel: React.FC<IProps> = ({ color, suspension, tinted }) => {
             paint: materials.Paint,
             glass,
             glassDefaults: glass.userData.defaults as IGlassDefaults,
+            doors: DOORS.map((door) => ({ ...door, node: gltf.scene.getObjectByName(door.name) })),
         };
     }, [gltf]);
 
     useEffect(() => {
         paintTarget.current.set(color);
     }, [color]);
+
+    const toggleDoor = (name: string) => {
+        setOpenDoors((prev) => {
+            const next = new Set(prev);
+            if (next.has(name)) next.delete(name);
+            else next.add(name);
+            return next;
+        });
+    };
+
+    const handleDoorClick = (event: ThreeEvent<MouseEvent>) => {
+        const doorName = findDoorName(event.object);
+        if (!doorName) return;
+        event.stopPropagation();
+        toggleDoor(doorName);
+    };
+
+    const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
+        domElement.style.cursor = findDoorName(event.object) ? "pointer" : "auto";
+    };
+
+    const handlePointerOut = () => {
+        domElement.style.cursor = "auto";
+    };
 
     useFrame((_, delta) => {
         const t = initialized.current ? Math.min(1, delta * 6) : 1;
@@ -127,9 +178,22 @@ const CarModel: React.FC<IProps> = ({ color, suspension, tinted }) => {
         if (parts.body) {
             parts.body.position.y += (SUSPENSION_OFFSET[suspension] - parts.body.position.y) * t;
         }
+
+        parts.doors.forEach((door) => {
+            if (!door.node) return;
+            const target = openDoors.has(door.name) ? door.openSign * DOOR_MAX_ANGLE : 0;
+            door.node.rotation.y += (target - door.node.rotation.y) * t;
+        });
     });
 
-    return <primitive object={gltf.scene} />;
+    return (
+        <primitive
+            object={gltf.scene}
+            onClick={handleDoorClick}
+            onPointerMove={handlePointerMove}
+            onPointerOut={handlePointerOut}
+        />
+    );
 };
 
 export const DemoScene: React.FC<IProps> = (props) => {
