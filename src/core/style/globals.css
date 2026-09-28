@@ -1,0 +1,82 @@
+@layer theme, base, mui, components, utilities;
+@import "tailwindcss";
+
+:root {
+  --background: #171717;
+}
+
+@theme inline {
+  --color-deep-black: #050708;
+  --color-back-secondary: #04090D;
+  --color-carbon-black: #0A0D10;
+  --color-dark-surface: #101419;
+  --color-elevated-surface: #151A1F;
+  --color-border-gray: #252C33;
+  --color-muted-gray: #6E7882;
+  --color-light-gray: #AAB3BC;
+  --color-pure-white: #F4F6F8;
+  --color-logo-red: #FF1B2D;
+  --color-dark-red: #A80F1D;
+  --color-red-glow: #FF1B2D;
+
+  --shadow-hero-carousel: inset 125px -35px 111px 0 black;
+  --shadow-about-us: inset 300px 1px 58px 0 black;
+
+  --font-manrope: var(--font-manrope);
+  --font-inter: var(--font-inter);
+}
+
+.font-upper-header-lg {
+  @apply font-inter font-bold text-[12px] leading-[1.8em] tracking-[0.03em];
+  @media (width >= 48rem) {
+    @apply text-[17px];
+  }
+}
+
+.font-header-lg {
+  @apply font-manrope font-bold text-[36px] leading-[1.04em] tracking-[0.02em];
+  @media (width >= 48rem) {
+    @apply text-[63px] leading-[1.1em];
+  }
+}
+
+.font-body-lg {
+  @apply font-inter text-[16px] leading-[1.55em] tracking-[-0.03em];
+  @media (width >= 48rem) {
+    @apply text-[22px] leading-[1.4em];
+  }
+}
+
+.font-button-lg {
+  @apply font-inter text-[17px]
+}
+
+.font-upper-header {
+  @apply font-inter text-[12px] leading-[1.8em];
+  @media (width >= 48rem) {
+    @apply text-[20px];
+  }
+}
+
+.font-header {
+  @apply font-manrope font-bold text-[28px] leading-[1.05em] tracking-[0.01em];
+  @media (width >= 48rem) {
+    @apply text-[45px] leading-[1.0em];
+  }
+}
+
+.font-button-sm {
+  @apply font-inter text-[16px] leading-[2em] tracking-[0.01em]
+}
+
+.font-header-sm {
+  @apply font-inter font-bold text-[17px] leading-[1.5em] tracking-[0.01em];
+}
+
+.font-body-sm {
+  @apply font-inter text-[15px] leading-[1.2em] tracking-[0.01em];
+}
+
+.font-button-xs {
+  @apply font-inter font-bold text-[14px] leading-[1.7em] tracking-[0.01em]
+}
