@@ -1,5 +1,5 @@
-import { HeroCarousel } from "@/pages/home/components/hero-section/components/HeroCarousel"
-import { HeroText } from "@/pages/home/components/hero-section/components/HeroText"
+import { HeroCarousel } from "@/views/home/components/hero-section/components/HeroCarousel"
+import { HeroText } from "@/views/home/components/hero-section/components/HeroText"
 
 export const HeroSection = () => {
 

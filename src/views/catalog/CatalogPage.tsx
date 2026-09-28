@@ -5,13 +5,13 @@ import Link from "next/link";
 import { PRODUCTS, PRODUCT_CATEGORIES } from "@/entities/product/model/mock";
 import { IProduct } from "@/entities/product/model/types";
 import { ProductModal } from "@/entities/product/ui/ProductModal";
-import { CatalogHero } from "@/pages/catalog/components/catalog-hero/CatalogHero";
-import { CategoryFilter } from "@/pages/catalog/components/category-filter/CategoryFilter";
-import { SearchSort } from "@/pages/catalog/components/search-sort/SearchSort";
-import { ProductGrid } from "@/pages/catalog/components/product-grid/ProductGrid";
-import { ConsultCard } from "@/pages/catalog/components/consult-card/ConsultCard";
-import { BenefitsGrid } from "@/pages/catalog/components/benefits-grid/BenefitsGrid";
-import { ShowMoreBar } from "@/pages/catalog/components/show-more-bar/ShowMoreBar";
+import { CatalogHero } from "@/views/catalog/components/catalog-hero/CatalogHero";
+import { CategoryFilter } from "@/views/catalog/components/category-filter/CategoryFilter";
+import { SearchSort } from "@/views/catalog/components/search-sort/SearchSort";
+import { ProductGrid } from "@/views/catalog/components/product-grid/ProductGrid";
+import { ConsultCard } from "@/views/catalog/components/consult-card/ConsultCard";
+import { BenefitsGrid } from "@/views/catalog/components/benefits-grid/BenefitsGrid";
+import { ShowMoreBar } from "@/views/catalog/components/show-more-bar/ShowMoreBar";
 
 type SortOption = "popular" | "cheap" | "expensive";
 

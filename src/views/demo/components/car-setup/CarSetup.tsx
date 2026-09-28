@@ -3,8 +3,8 @@
 import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
-import { BODY_COLORS, BODY_TYPES, CAR_MODELS, SUSPENSION_LEVELS } from "@/pages/demo/model/mock";
-import { SuspensionId } from "@/pages/demo/model/types";
+import { BODY_COLORS, BODY_TYPES, CAR_MODELS, SUSPENSION_LEVELS } from "@/views/demo/model/mock";
+import { SuspensionId } from "@/views/demo/model/types";
 
 interface IProps {
     bodyType: string;

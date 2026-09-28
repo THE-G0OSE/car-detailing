@@ -3,13 +3,13 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import ThreeSixtyIcon from "@mui/icons-material/ThreeSixty";
-import { ActiveServices } from "@/pages/demo/components/active-services/ActiveServices";
-import { CarSetup } from "@/pages/demo/components/car-setup/CarSetup";
-import { DemoIntro } from "@/pages/demo/components/demo-intro/DemoIntro";
-import { ExtrasStrip } from "@/pages/demo/components/extras-strip/ExtrasStrip";
-import { ResultSection } from "@/pages/demo/components/result-section/ResultSection";
-import { ServiceCards } from "@/pages/demo/components/service-cards/ServiceCards";
-import { ServiceCategories } from "@/pages/demo/components/service-categories/ServiceCategories";
+import { ActiveServices } from "@/views/demo/components/active-services/ActiveServices";
+import { CarSetup } from "@/views/demo/components/car-setup/CarSetup";
+import { DemoIntro } from "@/views/demo/components/demo-intro/DemoIntro";
+import { ExtrasStrip } from "@/views/demo/components/extras-strip/ExtrasStrip";
+import { ResultSection } from "@/views/demo/components/result-section/ResultSection";
+import { ServiceCards } from "@/views/demo/components/service-cards/ServiceCards";
+import { ServiceCategories } from "@/views/demo/components/service-categories/ServiceCategories";
 import {
     BODY_COLORS,
     BODY_TYPES,
@@ -17,11 +17,11 @@ import {
     DEFAULT_ACTIVE_SERVICES,
     DEMO_SERVICES,
     DEMO_SERVICE_CATEGORIES,
-} from "@/pages/demo/model/mock";
-import { SuspensionId } from "@/pages/demo/model/types";
+} from "@/views/demo/model/mock";
+import { SuspensionId } from "@/views/demo/model/types";
 
 const DemoScene = dynamic(
-    () => import("@/pages/demo/components/demo-scene/DemoScene").then((mod) => mod.DemoScene),
+    () => import("@/views/demo/components/demo-scene/DemoScene").then((mod) => mod.DemoScene),
     { ssr: false, loading: () => <div className="bg-deep-black size-full animate-pulse" /> }
 );
 

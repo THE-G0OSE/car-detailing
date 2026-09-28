@@ -1,4 +1,4 @@
-import { IBodyColor, IDemoService, IOption, SuspensionId } from "@/pages/demo/model/types";
+import { IBodyColor, IDemoService, IOption, SuspensionId } from "@/views/demo/model/types";
 
 export const BODY_TYPES: IOption[] = [
     { id: "sedan", label: "Седан" },

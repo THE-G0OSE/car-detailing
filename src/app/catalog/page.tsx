@@ -1,4 +1,4 @@
-import { CatalogPage } from "@/pages/catalog/CatalogPage";
+import { CatalogPage } from "@/views/catalog/CatalogPage";
 
 export default function Catalog() {
   return (

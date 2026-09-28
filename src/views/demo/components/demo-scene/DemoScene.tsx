@@ -6,7 +6,8 @@ import { Color, Mesh, MeshStandardMaterial, PMREMGenerator } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { SuspensionId } from "@/pages/demo/model/types";
+import { withBasePath } from "@/shared/lib/basePath";
+import { SuspensionId } from "@/views/demo/model/types";
 
 interface IProps {
     color: string;
@@ -14,7 +15,7 @@ interface IProps {
     tinted: boolean;
 }
 
-const CAR_MODEL_URL = "/models/sedan.glb";
+const CAR_MODEL_URL = withBasePath("/models/sedan.glb");
 
 // Body offset from the stock ride height; the model supports −0.06…+0.10 m.
 const SUSPENSION_OFFSET: Record<SuspensionId, number> = {

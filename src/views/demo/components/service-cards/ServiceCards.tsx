@@ -3,7 +3,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from "@mui/icons-material/Check";
 import Image from "next/image";
 import Link from "next/link";
-import { IDemoService } from "@/pages/demo/model/types";
+import { IDemoService } from "@/views/demo/model/types";
 
 interface IProps {
     services: IDemoService[];
